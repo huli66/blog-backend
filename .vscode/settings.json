@@ -1,0 +1,18 @@
+{
+  "explorer.confirmDelete": false,
+  "editor.tabSize": 2,
+  "editor.fontWeight": "normal",
+  "workbench.startupEditor": "none",
+  "window.zoomLevel": 1,
+  "[markdown]": {
+    "editor.quickSuggestions": {
+      "other": "on",
+      "comments": "on",
+      "strings": "on"
+    }
+  },
+  "files.exclude": {
+    "**/.git": false,
+    "**/.svn": false
+  }
+}
