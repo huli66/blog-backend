@@ -20,18 +20,18 @@ jobs:
           node-version: 18
           cache: npm
 
-      - name: build
-        run: |
-          npm install
-          npm run build
+      - name: install deps
+        run: npm install
 
-      - name: FTP-Deploy-Action
-        uses: SamKirkland/FTP-Deploy-Action@2.0.0
-        env:
-          FTP_SERVER: ${{ secrets.REMOTE_HOST }}
-          FTP_USERNAME: ${{ secrets.REMOTE_USER }}
-          FTP_PASSWORD: ${{ secrets.PASSWORD }}
-          LOCAL_DIR: ./build/
-          REMOTE_DIR: ${{ secrets.SERVER_DESTINATION }}
-          METHON: sftp
-          PORT: ${{ SERVER_PORT }}
+      - name: build
+        run: npm run build
+
+      - name: copy file via ssh password
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          password: ${{ secrets.PASSWORD }}
+          port: 22
+          source: "docs/"
+          target: ${{ secrets.TARGET }}
