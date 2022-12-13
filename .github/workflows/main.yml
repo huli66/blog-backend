@@ -1,7 +1,7 @@
-name: Deploy to GitHub
+name: Deploy by GithubAction
 
 on:
-  pull_request:
+  push:
     branches:
       - main
 
@@ -9,22 +9,22 @@ jobs:
   my_job:
     name: deploy
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: get new code
         uses: actions/checkout@v2
-      
+
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: npm
-        
+
       - name: build
         run: |
           npm install
           npm run build
-          
+
       - name: FTP-Deploy-Action
         uses: SamKirkland/FTP-Deploy-Action@2.0.0
         env:
