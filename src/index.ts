@@ -1,4 +1,4 @@
-import express = require('express');
+const express = require("express");
 import { getAllFiles, getBlogInfo, getFileNames } from './utils/file';
 const app = express();
 

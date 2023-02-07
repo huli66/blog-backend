@@ -1,5 +1,5 @@
-import fsp = require('node:fs/promises');
-import path = require('node:path');
+const fsp = require("fs/promises");
+const path = require("path");
 import { absPath } from './path';
 
 
@@ -31,9 +31,8 @@ export async function getBlogInfo(
 
 export async function getAllFiles(dir: string) {
   const files = await getFileNames(dir);
-    debugger;
   const data = await Promise.allSettled(
-    files.map((id) => getBlogInfo(dir, id))
+    files.map((id: string) => getBlogInfo(dir, id))
   );
 
   return data.filter(a => a !== undefined);
