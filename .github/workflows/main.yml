@@ -1,4 +1,4 @@
-name: Deploy by GithubAction
+name: Deploy Docker Image by GithubAction
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   my_job:
-    name: deploy
+    name: build and deploy
     runs-on: ubuntu-latest
 
     steps:
@@ -20,18 +20,23 @@ jobs:
           node-version: 18
           cache: npm
 
-      - name: install deps
+      - name: Install deps
         run: npm install
 
-      - name: build
+      - name: Build
         run: npm run build
 
-      - name: copy file via ssh password
-        uses: appleboy/scp-action@master
+      - name: Login
+        run: docker login --username=${{ secrets.DOCKER_NAME }} --password=${{ secrets.DOCKER_PASSWORD }}
+
+      - name: SSH login
+        run: ssh $${{ secrets.REMOTE_NAME }}@${{ secrets.REMOTE_PASSWORD}}
+
+      - name: ssh login
+        uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          password: ${{ secrets.PASSWORD }}
-          port: 22
-          source: "docs/"
-          target: ${{ secrets.TARGET }}
+          host: ${{ secrets.REMOTE_HOST }} #云服务器的ip
+          username: ${{ secrets.REMOTE_USER }} #云服务器的用户名
+          password: ${{ secrets.PASSWORD }} #云服务器的密码
+          script: cd ~ && sh deploy.sh ${{ secrets.DOCKER_USERNAME }} ${{ secrets.DOCKER_PASSWORD }} #运行脚本
+

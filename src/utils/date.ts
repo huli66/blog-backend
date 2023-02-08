@@ -1,20 +1,20 @@
 /**
  * 时分秒日月补 0
- * @param {string} str
- * @returns {string}
+ * @param str
+ * @returns
  */
-const padStartZero = (str: string | number) => str.toString().padStart(2, "0");
+const padStartZero = (str: string | number): string => str.toString().padStart(2, "0");
 
 /**
  * 格式化日期
  * @param date 
  * @param formatStr 
- * @returns {string}
+ * @returns
  */
 export function formatDate(
   date: number | string | Date,
   formatStr: string = "YYYY-MM-DD"
-) {
+): string {
   const inputDate = new Date(date);
   const year = inputDate.getFullYear();
   const month = inputDate.getMonth() + 1;

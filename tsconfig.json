@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
+    "outDir": "./build", // tsc 编译后保存目录
     "noImplicitAny": true,
-    "module": "es6",
+    "module": "CommonJS",
     "target": "es5",
     "jsx": "react",
     "allowJs": true,
@@ -11,5 +11,7 @@
   },
   "exclude": [
     "node_modules",
+    "dist",
+    "build",
   ]
 }

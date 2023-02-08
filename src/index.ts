@@ -1,7 +1,10 @@
-import express from "express";
+import * as express from "express";
+import * as path from "path";
 import { getAllFiles, getBlogInfo, getFileNames } from './utils/file';
-const app = express();
 
+const app = express();
+const PORT = 4090;
+const staticPath =  path.resolve(__dirname, "../../static-blogs");
 
 app.get('/', (req, res) => {
   res.status(200);
@@ -9,7 +12,15 @@ app.get('/', (req, res) => {
 });
 
 app.get('/blog/list', (req, res) => {
-  getAllFiles('./static').then(result => {
+  getFileNames(staticPath).then(result => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.status(200);
+    res.json(result);
+  });
+});
+
+app.get('/blog/datalist', (req, res) => {
+  getAllFiles(staticPath).then(result => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.status(200);
     res.json(result);
@@ -17,13 +28,14 @@ app.get('/blog/list', (req, res) => {
 });
 
 app.get('/blog/detail', (req, res) => {
-  getBlogInfo('./static', '装饰器.md').then((result) => {
+  const { fileName } = req.query;
+  getBlogInfo(staticPath, fileName as string).then((result) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.status(200);
     res.json(result);
   });
 });
 
-app.listen(4100, () => {
-  console.log('4100 端口启动...');
+app.listen(PORT, () => {
+  console.log(`${PORT} 端口启动...`);
 });
