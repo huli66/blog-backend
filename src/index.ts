@@ -4,7 +4,8 @@ import { getAllFiles, getBlogInfo, getFileNames } from './utils/file';
 
 const app = express();
 const PORT = 4090;
-const staticPath =  path.resolve(process.cwd(), "../blogs");
+const staticPath =  path.resolve(process.cwd(), "./blogs");
+console.log(staticPath);
 
 app.get('/', (req, res) => {
   res.status(200);
@@ -12,6 +13,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/blog/list', (req, res) => {
+  console.log("访问列表");
   getFileNames(staticPath).then(result => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.status(200);
@@ -20,6 +22,7 @@ app.get('/blog/list', (req, res) => {
 });
 
 app.get('/blog/datalist', (req, res) => {
+  console.log("/blog/datalist")
   getAllFiles(staticPath).then(result => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.status(200);
@@ -29,6 +32,7 @@ app.get('/blog/datalist', (req, res) => {
 
 app.get('/blog/detail', (req, res) => {
   const { fileName } = req.query;
+  console.log(`/blog/detail?fileName=${fileName}`);
   getBlogInfo(staticPath, fileName as string).then((result) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.status(200);
