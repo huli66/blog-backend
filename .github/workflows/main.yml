@@ -32,9 +32,6 @@ jobs:
       - name: Build Image and Push
         run: docker image build -t huli66/blog-backend:latest . && docker push huli66/blog-backend:latest
 
-      - name: SSH login
-        run: ssh $${{ secrets.REMOTE_NAME }}@${{ secrets.REMOTE_PASSWORD}}
-
       - name: Tencent Login and Run Command
         uses: garygrossgarten/github-action-ssh@release
         with:
