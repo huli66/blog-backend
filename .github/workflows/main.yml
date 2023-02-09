@@ -35,7 +35,7 @@ jobs:
       - name: Tencent Login and Run Command
         uses: garygrossgarten/github-action-ssh@release
         with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          password: ${{ secrets.PASSWORD }}
+          host: ${{ secrets.TENCENT_HOST }}
+          username: ${{ secrets.TENCENT_USER }}
+          password: ${{ secrets.TENCENT_PASSWORD }}
           command: cd ~/static-blog/deploy && sh blog-backend.sh ${{ secrets.DOCKER_USERNAME }} ${{ secrets.DOCKER_PASSWORD }}
