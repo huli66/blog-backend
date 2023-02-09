@@ -38,4 +38,4 @@ jobs:
           host: ${{ secrets.TENCENT_HOST }}
           username: ${{ secrets.TENCENT_USER }}
           password: ${{ secrets.TENCENT_PASSWORD }}
-          command: cd ~/static-blog/deploy && sh blog-backend.sh ${{ secrets.DOCKER_USERNAME }} ${{ secrets.DOCKER_PASSWORD }}
+          command: cd ~/static-blogs/deploy && sh blog-backend.sh ${{ secrets.DOCKER_USERNAME }} ${{ secrets.DOCKER_PASSWORD }}
