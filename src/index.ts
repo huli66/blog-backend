@@ -4,7 +4,7 @@ import { getAllFiles, getBlogInfo, getFileNames } from './utils/file';
 
 const app = express();
 const PORT = 4090;
-const staticPath =  path.resolve(__dirname, "../../static-blogs");
+const staticPath =  path.resolve(process.cwd(), "../blogs");
 
 app.get('/', (req, res) => {
   res.status(200);
@@ -38,4 +38,5 @@ app.get('/blog/detail', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`${PORT} 端口启动...`);
+  console.log(process.cwd());
 });

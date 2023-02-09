@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: get new code
+      - name: Get New Code
         uses: actions/checkout@v2
 
       - name: Setup Node
@@ -26,17 +26,19 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Login
+      - name: Docker Login
         run: docker login --username=${{ secrets.DOCKER_NAME }} --password=${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Image and Push
+        run: docker image build -t huli66/blog-backend:latest . && docker push huli66/blog-backend:latest
 
       - name: SSH login
         run: ssh $${{ secrets.REMOTE_NAME }}@${{ secrets.REMOTE_PASSWORD}}
 
-      - name: ssh login
-        uses: appleboy/ssh-action@master
+      - name: Tencent Login and Run Command
+        uses: garygrossgarten/github-action-ssh@release
         with:
-          host: ${{ secrets.REMOTE_HOST }} #云服务器的ip
-          username: ${{ secrets.REMOTE_USER }} #云服务器的用户名
-          password: ${{ secrets.PASSWORD }} #云服务器的密码
-          script: cd ~ && sh deploy.sh ${{ secrets.DOCKER_USERNAME }} ${{ secrets.DOCKER_PASSWORD }} #运行脚本
-
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          password: ${{ secrets.PASSWORD }}
+          command: cd ~/static-blog/deploy && sh blog-backend.sh ${{ secrets.DOCKER_USERNAME }} ${{ secrets.DOCKER_PASSWORD }}
